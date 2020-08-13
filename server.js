@@ -14,6 +14,6 @@ app.use(routes);
 // turn on connection to db and server
 // Value of 'false' performs similarly to DROP TABLE IF EXISTS. 
 // This allows the table to be overwritten and re-created.
-sequelize.sync({ force: true }).then(() => {
+sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log('Now listening'));
 });
