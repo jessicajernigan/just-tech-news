@@ -43,9 +43,10 @@ router.get('/', (req, res) => {
     });
 });
 
-// router.get('/', (req, res) => {
-//   console.log(req.session);
-//   res.render('homepage', {
+
+// HARDCODED CONTENT FOR TESTING PURPOSES
+// router.get('/post/:id', (req, res) => {
+//   const post = {
 //     id: 1,
 //     post_url: 'https://handlebarsjs.com/guide/',
 //     title: 'Handlebars Docs',
@@ -55,7 +56,9 @@ router.get('/', (req, res) => {
 //     user: {
 //       username: 'test_user'
 //     }
-//   });
+//   };
+
+//   res.render('single-post', { post });
 // });
 
 
