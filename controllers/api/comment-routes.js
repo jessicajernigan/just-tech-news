@@ -3,12 +3,18 @@ const { Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 router.get('/', (req, res) => {
-  User.findAll()
+  Comment.findAll({
+    attributes: ['id', 'comment_text', 'user_id', 'post_id']
+  })
+    .then((dbCommentData) => res.json(dbCommentData))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
-
 router.post('/', withAuth, (req, res) => {
-  // check the session
+  // check the session to verify user is logged in
   if (req.session) {
     Comment.create({
       comment_text: req.body.comment_text,
@@ -16,14 +22,13 @@ router.post('/', withAuth, (req, res) => {
       // use the id from the session
       user_id: req.session.user_id
     })
-      .then(dbCommentData => res.json(dbCommentData))
-      .catch(err => {
+      .then((dbCommentData) => res.json(dbCommentData))
+      .catch((err) => {
         console.log(err);
         res.status(400).json(err);
       });
   }
 });
-
 
 router.delete('/:id', withAuth, (req, res) => {
   Comment.destroy({
@@ -31,17 +36,18 @@ router.delete('/:id', withAuth, (req, res) => {
       id: req.params.id
     }
   })
-    .then(dbPostData => {
-      if (!dbPostData) {
-        res.status(404), json({ message: 'No deleting comments that do not exist, please.' });
+    .then((dbCommentData) => {
+      if (!dbCommentData) {
+        res.status(400).json({ message: 'No comment found with this id' });
         return;
       }
-      res.json(dbPostData);
+      res.json(dbCommentData);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).json(err);
     });
 });
+
 
 module.exports = router;

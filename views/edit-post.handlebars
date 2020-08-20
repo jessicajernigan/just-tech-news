@@ -20,6 +20,7 @@
 </article>
 
 
+
 {{!-- Form for adding new comments and then list the post's current comments underneath --}}
 <form class="comment-form">
   <div>
@@ -30,6 +31,8 @@
     <button type="submit">add comment</button>
   </div>
 </form>
+
+{{> comments post.comments}}
 
 
 <script src="/javascript/edit-post.js"></script>

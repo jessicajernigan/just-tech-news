@@ -1,10 +1,13 @@
 async function upvoteClickHandler(event) {
   event.preventDefault();
+  // console.log('Upvote button clicked.');
 
   const id = window.location.toString().split('/')[
     window.location.toString().split('/').length - 1
   ];
+  // console.log(id);
 
+  // controllers/api/post-routes
   const response = await fetch('/api/posts/upvote', {
     method: 'PUT',
     body: JSON.stringify({
@@ -16,6 +19,7 @@ async function upvoteClickHandler(event) {
   });
 
   if (response.ok) {
+    console.log('Response received.');
     document.location.reload();
   } else {
     alert(response.statusText);
